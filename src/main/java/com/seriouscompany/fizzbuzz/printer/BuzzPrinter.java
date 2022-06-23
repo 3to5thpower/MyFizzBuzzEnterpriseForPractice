@@ -6,10 +6,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class BuzzPrinter {
+public class BuzzPrinter implements StringPrinter {
     private final BuzzReturner buzzReturner;
 
-    public void printBuzz() {
+    @Override
+    public void print() {
         final var printString = buzzReturner.getBuzz();
         System.out.print(printString);
     }

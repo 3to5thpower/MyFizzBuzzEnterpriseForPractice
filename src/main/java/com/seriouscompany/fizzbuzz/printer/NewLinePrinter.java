@@ -6,10 +6,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class NewLinePrinter {
+public class NewLinePrinter implements StringPrinter {
     private final NewLineStringReturner newLineStringReturner;
 
-    public void printNewLine() {
+    @Override
+    public void print() {
         final var printString = newLineStringReturner.getNewLineString();
         System.out.print(printString);
     }

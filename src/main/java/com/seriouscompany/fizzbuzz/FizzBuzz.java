@@ -1,52 +1,52 @@
 package com.seriouscompany.fizzbuzz;
 
-import com.seriouscompany.fizzbuzz.loop.LoopConditionEvaluater;
-import com.seriouscompany.fizzbuzz.loop.LoopInitializer;
-import com.seriouscompany.fizzbuzz.loop.LoopStepManager;
-import com.seriouscompany.fizzbuzz.printer.BuzzPrinter;
-import com.seriouscompany.fizzbuzz.printer.FizzPrinter;
-import com.seriouscompany.fizzbuzz.printer.IntPrinter;
-import com.seriouscompany.fizzbuzz.printer.NewLinePrinter;
-import com.seriouscompany.fizzbuzz.strategy.BuzzStrategy;
-import com.seriouscompany.fizzbuzz.strategy.FizzStrategy;
-import com.seriouscompany.fizzbuzz.strategy.NoFizzNoBuzzStrategy;
+import com.seriouscompany.fizzbuzz.factory.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class FizzBuzz {
 
-    // loop managers
-    private final LoopInitializer loopInitializer;
-    private final LoopStepManager loopStepManager;
-    private final LoopConditionEvaluater loopConditionEvaluater;
+    private final LoopComponentFactory loopComponentFactory;
+    private final FizzStrategyFactory fizzStrategyFactory;
+    private final FizzStringPrinterFactory fizzStringPrinterFactory;
+    private final BuzzStrategyFactory buzzStrategyFactory;
+    private final BuzzStringPrinterFactory buzzStringPrinterFactory;
 
-    // string printers
-    private final FizzPrinter fizzPrinter;
-    private final BuzzPrinter buzzPrinter;
-    private final IntPrinter intPrinter;
-    private final NewLinePrinter newLinePrinter;
-
-    //
-    private final FizzStrategy fizzStrategy;
-    private final BuzzStrategy buzzStrategy;
-    private final NoFizzNoBuzzStrategy noFizzNoBuzzStrategy;
+    private final NoFizzNoBuzzStrategyFactory noFizzNoBuzzStrategyFactory;
+    private final IntPrinterFactory intPrinterFactory;
+    private final NewLineStringPrinterFactory newLineStringPrinterFactory;
 
     public void fizzbuzz(int number) {
+        final var loopInitializer = loopComponentFactory.createLoopInitializer();
+        final var loopStepManager = loopComponentFactory.createLoopStepManager();
+        final var loopConditionEvaluater = loopComponentFactory.createLoopConditionEvaluater();
+
+        final var fizzStrategy = fizzStrategyFactory.createFizzStrategy();
+        final var fizzStringPrinter = fizzStringPrinterFactory.createStringPrinter();
+
+        final var buzzStrategy = buzzStrategyFactory.createBuzzStrategy();
+        final var buzzStringPrinter = buzzStringPrinterFactory.createStringPrinter();
+
+        final var noFizzNoBuzzStrategy = noFizzNoBuzzStrategyFactory.createNoFizzNoBuzzStrategy();
+        final var intPrinter = intPrinterFactory.createIntPrinter();
+
+        final var newLineStringPrinter = newLineStringPrinterFactory.createStringPrinter();
+
         for (var i = loopInitializer.getLoopInitializationPoint();
                 loopConditionEvaluater.isLoopRunning(i, number);
                 i = loopStepManager.stepLoop(i)) {
             if (fizzStrategy.isFizz(i)) {
-                fizzPrinter.printFizz();
+                fizzStringPrinter.print();
             }
             if (buzzStrategy.isBuzz(i)) {
-                buzzPrinter.printBuzz();
+                buzzStringPrinter.print();
             }
             if (noFizzNoBuzzStrategy.isNoFizzNoBuzz(i)) {
                 intPrinter.printInteger(i);
             }
-            newLinePrinter.printNewLine();
+            newLineStringPrinter.print();
         }
     }
 }

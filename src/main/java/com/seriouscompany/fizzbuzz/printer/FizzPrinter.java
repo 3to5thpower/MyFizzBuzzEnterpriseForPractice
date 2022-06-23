@@ -6,10 +6,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class FizzPrinter {
+public class FizzPrinter implements StringPrinter {
     private final FizzReturner fizzReturner;
 
-    public void printFizz() {
+    @Override
+    public void print() {
         final var printString = fizzReturner.getFizz();
         System.out.print(printString);
     }
