@@ -32,4 +32,4 @@ test {
 }
 
 apply plugin: 'application'
-mainClassName = 'com.seriouscompany.fizzbuzz.Main'
+mainClassName = 'com.seriouscompany.fizzbuzz.impl.Main'
