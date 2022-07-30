@@ -40,13 +40,13 @@ public class FizzBuzz {
         for (var i = loopInitializer.getLoopInitializationPoint();
                 loopConditionEvaluater.isLoopRunning(i, number);
                 i = loopStepManager.stepLoop(i)) {
-            if (fizzStrategy.isFizz(i)) {
+            if (fizzStrategy.isEvenlyDivisible(i)) {
                 fizzStringPrinter.print();
             }
-            if (buzzStrategy.isBuzz(i)) {
+            if (buzzStrategy.isEvenlyDivisible(i)) {
                 buzzStringPrinter.print();
             }
-            if (noFizzNoBuzzStrategy.isNoFizzNoBuzz(i)) {
+            if (noFizzNoBuzzStrategy.isEvenlyDivisible(i)) {
                 intPrinter.printInteger(i);
             }
             newLineStringPrinter.print();
